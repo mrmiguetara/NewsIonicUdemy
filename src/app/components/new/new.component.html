@@ -1,0 +1,14 @@
+<ion-card color="dark" (click)="openUrl(new.url)">
+  <ion-card-header>
+  <ion-card-subtitle>
+      <span class="primary-color"> {{index + 1}}. </span>
+      <span class="source-title"> {{new.source.name}}</span>
+  </ion-card-subtitle>
+  <ion-card-title>{{new.title}}</ion-card-title>
+  </ion-card-header>
+
+  <ion-img [src]="new.urlToImage"></ion-img>
+  <ion-card-content>
+      {{new.description}}
+  </ion-card-content>
+</ion-card>
