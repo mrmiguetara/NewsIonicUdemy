@@ -8,5 +8,8 @@
 
 <ion-content [fullscreen]="true" color="dark">
   <app-news [news]="news"></app-news>
-
+  <ion-infinite-scroll threshold="25%" position="bottom" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content loadingSpinner="crescent" loadingText="Loading articles...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>

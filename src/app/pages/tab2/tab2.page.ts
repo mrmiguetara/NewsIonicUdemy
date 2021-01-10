@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { IonSegment } from '@ionic/angular';
 import { NewsService } from 'src/app/services/news.service';
 
 @Component({
@@ -20,26 +21,44 @@ export class Tab2Page implements OnInit{
     'technology',
   ];
 
+  category: string;
+
   constructor( private newsService: NewsService) {}
 
   ngOnInit() {
+    this.category = this.categories[0];
     this.loadHeadlines( this.categories[0] );
   }
 
   getHeadlines( event ) {
-    const category = event.detail.value;
+    this.category = event.detail.value;
 
     this.news = [];
 
-    this.loadHeadlines(category);
+    this.loadHeadlines(this.category);
   }
 
-  private loadHeadlines( category: string) {
+  private loadHeadlines( category: string, event?) {
     this.newsService.getTopHeadlinesByCategory(category).subscribe(
       response => {
-        this.news.push( ...response.articles );
+        if (event) {
+          if (response.articles.length === 0) {
+            event.target.disabled = true;
+            event.target.complete()
+            return;
+          }
+          this.news.push( ...response.articles );
+          event.target.complete()
+        }
+        else {
+          this.news.push ( ...response.articles );
+        }
       }
     );
+  }
+
+  loadData( event) {
+    this.loadHeadlines(this.category, event)
   }
 
 }
